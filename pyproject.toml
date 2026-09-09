@@ -1,0 +1,3 @@
+[project]
+name = "employee-attrition-prediction"
+requires-python = ">=3.11"
