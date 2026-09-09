@@ -1,5 +1,19 @@
-streamlit>=1.28.0
-pandas>=2.0.0
-numpy>=1.24.0
-scikit-learn>=1.3.0
-joblib>=1.3.0
+# Core dependencies
+pandas==2.3.3
+numpy==2.3.5
+scikit-learn==1.7.2
+joblib==1.5.2
+
+# Streamlit for web application
+streamlit==1.39.0
+
+# Visualization
+matplotlib==3.10.1
+seaborn==0.13.2
+
+# Model explainability
+shap==0.52.0
+
+# Jupyter (for notebooks)
+jupyter==1.1.1
+notebook==7.3.3
