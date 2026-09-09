@@ -6,7 +6,11 @@ Implements SHAP and Permutation Importance for model explainability
 import pandas as pd
 import numpy as np
 import joblib
-import shap
+try:
+    import shap
+    SHAP_AVAILABLE = True
+except ImportError:
+    SHAP_AVAILABLE = False
 import matplotlib.pyplot as plt
 from sklearn.inspection import permutation_importance
 from typing import Dict, Tuple
@@ -32,6 +36,9 @@ def get_shap_explainer(
     model = pipeline.named_steps["model"]
     
     # For Logistic Regression, use LinearExplainer
+    if not SHAP_AVAILABLE:
+        return None
+    
     if X_background is not None:
         explainer = shap.LinearExplainer(model, X_background)
     else:
