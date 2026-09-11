@@ -8,8 +8,21 @@ import numpy as np
 import joblib
 from typing import Dict, Tuple
 import os
+import streamlit as st
 
 from features import create_all_features, map_categorical_features
+
+
+@st.cache_resource
+def _load_pipeline_cached(model_path: str):
+    """Cache wrapper for joblib.load to avoid reloading the model."""
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def _load_feature_names_cached(feature_names_path: str):
+    """Cache wrapper for joblib.load to avoid reloading feature names."""
+    return joblib.load(feature_names_path)
 
 
 def load_pipeline(
@@ -27,8 +40,7 @@ def load_pipeline(
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found: {model_path}")
     
-    pipeline = joblib.load(model_path)
-    return pipeline
+    return _load_pipeline_cached(model_path)
 
 
 def load_feature_names(
@@ -46,8 +58,7 @@ def load_feature_names(
     if not os.path.exists(feature_names_path):
         raise FileNotFoundError(f"Feature names file not found: {feature_names_path}")
     
-    feature_names = joblib.load(feature_names_path)
-    return feature_names
+    return _load_feature_names_cached(feature_names_path)
 
 
 def preprocess_input(input_dict: Dict) -> pd.DataFrame:
